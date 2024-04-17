@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { isAuthenticatedGuard } from './auth/guards/is-authenticated.guard';
 
 const routes: Routes = [
   {
@@ -8,10 +9,10 @@ const routes: Routes = [
     loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
   },
   {
-    path: 'dashborad',
-    //guards
+    path: 'dashboard',
+    canActivate: [isAuthenticatedGuard],
     loadChildren: () =>
-      import('./dashborad/dashborad.module').then((m) => m.DashboradModule),
+      import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
   },
   {
     path: '**',
