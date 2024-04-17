@@ -3,22 +3,14 @@ import { AuthService } from '../services/auth.service';
 import { inject } from '@angular/core';
 import { AuthStatus } from '../interfaces/auth-status.enum';
 
-export const isAuthenticatedGuard: CanActivateFn = (route, state) => {
-  /* const url = state.url;
-  localStorage.setItem('path', url); */
-
+export const isNotAuthenticatedGuard: CanActivateFn = (route, state) => {
   const authService: AuthService = inject(AuthService);
   const router: Router = inject(Router);
 
   if (authService.authStatus() === AuthStatus.authenticated) {
-    return true;
-  }
-
-  if (authService.authStatus() === AuthStatus.checking) {
+    router.navigateByUrl('/dashboard');
     return false;
   }
 
-  router.navigateByUrl('/auth');
-
-  return false;
+  return true;
 };
